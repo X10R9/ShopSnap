@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "电商图片提取助手",
+  "version": "1.0.0",
+  "description": "在淘宝、天猫、京东、拼多多商品详情页一键提取所有图片，在新页面挑选并批量下载为 PNG。",
+  "minimum_chrome_version": "102",
+  "permissions": ["storage", "downloads", "scripting"],
+  "host_permissions": [
+    "*://*.taobao.com/*",
+    "*://*.tmall.com/*",
+    "*://*.alicdn.com/*",
+    "*://*.jd.com/*",
+    "*://*.360buyimg.com/*",
+    "*://*.pinduoduo.com/*",
+    "*://*.yangkeduo.com/*",
+    "*://*.pddpic.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.taobao.com/*",
+        "*://*.tmall.com/*",
+        "*://*.jd.com/*",
+        "*://*.pinduoduo.com/*",
+        "*://*.yangkeduo.com/*"
+      ],
+      "js": [
+        "src/common/sites.js",
+        "src/common/utils.js",
+        "src/content/extractor.js",
+        "src/content/button.js",
+        "src/content/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "电商图片提取助手（打开上次结果）"
+  }
+}
